@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+#
+# lvs.alert - Linux Virtual Server alert for mon
+#
+# It can be activated by mon to remove a real server when the
+# service is down, or add the server when the service is up.
+#
+#
+use Getopt::Std;
+getopts ("s:g:h:t:l:P:M:R:W:F:B:uX");
+
+$ipvsadm = "sudo /sbin/ipvsadm";
+$protocol = $opt_P;
+$fw_mark = $opt_M;
+$remote = $opt_R;
+$weight = $opt_W;
+$backup = $opt_B;
+if ($opt_F eq "nat") {
+	$forwarding = "-m";
+}
+elsif ($opt_F eq "tun") {
+	$forwarding = "-i";
+}
+else {
+	 $forwarding = "-g";
+}
+
+if ($opt_u) {
+
+    if ($opt_X) {
+	system("$ipvsadm -a -f $fw_mark -r $remote $forwarding");
+    } else {
+	system("$ipvsadm -d -f $fw_mark -r $backup");
+	system("$ipvsadm -a -f $fw_mark -r $remote $forwarding");
+    }
+} else {
+    if ($opt_X) {
+	system("$ipvsadm -d -f $fw_mark -r $remote");
+    } else {
+	system("$ipvsadm -d -f $fw_mark -r $remote");
+	system("$ipvsadm -a -f $fw_mark -r $backup $forwarding");
+    }
+
+};
+
