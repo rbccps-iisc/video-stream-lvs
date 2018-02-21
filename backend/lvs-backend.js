@@ -49,10 +49,10 @@ app.post('/create_stream', function(req, res) {
 		//console.log(dict);
                 if (cntr == data_len) {
                    if (final_stat == 1) {
-                     console.log('Success \n');
+                     console.log("Success");
                      res.status(200).send(dict);
                    } else {
-                     console.log('Error \n');
+                     console.log("Error: Some server failed");
                      res.status(500).send(dict);
                    }
                    console.log(dict);
@@ -60,14 +60,19 @@ app.post('/create_stream', function(req, res) {
 		});
 	});    
   });
-  fs.createReadStream(inputFile).pipe(parser);
+  var inp = fs.createReadStream(inputFile);
+  inp.on('error', function handler(){
+  console.log("Error opening realserver csv file");
+  res.send("Error: Could not open input (realserver) file");
+  }).pipe(parser);
 });
+
 
 app.delete('/remove_stream', function(req, res) {
   var id = req.param('id'); 
   var nocheck = req.headers['no-check']
   var pwd = req.headers['pwd']
-  var inputFile='../config/realserver-backup-list.csv';
+  var inputFile='../lvs-config/realserver-backup-list.csv';
   var dict = [];
   var cntr = 0;
   var final_stat = 1;
@@ -121,5 +126,11 @@ app.delete('/remove_stream', function(req, res) {
      });    
 
     });    
-  fs.createReadStream(inputFile).pipe(parser);
+  //fs.createReadStream(inputFile).pipe(parser);
+  var inp = fs.createReadStream(inputFile);
+  inp.on('error', function handler(){
+  console.log('Err: opening realserver csv file \n');
+  res.send('Error: Could not open input (realserver) file \n');
+  }).pipe(parser);
 });
+
