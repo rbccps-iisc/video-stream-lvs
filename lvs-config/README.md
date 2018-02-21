@@ -53,13 +53,13 @@ sudo python setup.py
 
 →  lvs.alert script is configured to make changes to IPVS rules when instructed by mon.
 
-→  Edit mon configuration to monitor each video server
+→  Edits mon configuration to monitor each video server
 
-→  Set monitor interval and the service to monitor (For eg. monitor tcp service on port 1935)
+→  Sets monitor interval and the service to monitor (For eg. monitor tcp service on port 1935)
 
-→  Set mail id to send alert messages when the video server goes down or when it comes back up.
+→  Sets mail id to send alert messages when the video server goes down or when it comes back up.
 
-→  Restart mon service
+→  Restarts mon service
 
 ### Other scripts (post-startup)
 #### Change Client IP list

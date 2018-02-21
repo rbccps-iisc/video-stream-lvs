@@ -109,6 +109,6 @@ with open('realserver-backup-list.csv') as myFile1:
 	os.system("sudo sed -i -e \"\$ a \n\" /etc/mon/mon.cf")
 	i=i+1
 myFile1.close()
-#os.system("echo \"starting mon service\"")
-#os.system("sudo /etc/init.d/mon start")
+os.system("echo \"restarting mon service\"")
+os.system("sudo /etc/init.d/mon restart")
 #os.system("sudo mon -d")
