@@ -92,16 +92,17 @@ with open('realserver-backup-list.csv') as myFile1:
 	with open('fwmark-routing-list.csv') as myFile2:  
     	  reader = csv.DictReader(myFile2)
     	  for row in reader:
+	      length=len(row['server'].split(","))
 	      for l in row['server'].split(","):
 	        if l==rip:
 		  #if a single Video server is associated with a firewall mark
-		  if not row['schedule']:
+		  if length==1:
 			#On Video server going down, Instruct lvs.alert to replace routing rule for the server with backup in the IPVS table
 			os.system("sudo sed -i -e \"\$ a \\\t\\\t\\\talert lvs.alert -P tcp -R "+rip+" -F dr -B "+backup+" -M "+row['fwmark']+"\" /etc/mon/mon.cf")
 			#On Video server coming back up, Instruct lvs.alert to replace routing rule for the backup with server in the IPVS table
         		os.system("sudo sed -i -e \"$ a \\\t\\\t\\\tupalert lvs.alert -P tcp -R "+rip+" -F dr -B "+backup+" -M "+row['fwmark']+"\" /etc/mon/mon.cf")
 		 #if multiple Video servers are associated with a firewall mark
-		  elif row['schedule']:
+		  else:
 			#On Video server going down, Instruct lvs.alert to remove routing rule for the server from IPVS table
 			os.system("sudo sed -i -e \"\$ a \\\t\\\t\\\talert lvs.alert -P tcp -R "+rip+" -F dr -M "+row['fwmark']+" -X\" /etc/mon/mon.cf")
 			#On Video server coming back up, Instruct lvs.alert to add routing rule for the server to IPVS table
