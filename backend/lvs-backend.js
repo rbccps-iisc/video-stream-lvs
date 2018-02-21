@@ -13,9 +13,9 @@ console.log('Server started! At http://localhost:' + port);
 app.post('/create_stream', function(req, res) {
   var id = req.param('id');
   var playurl = req.param('playurl');  
-  var nocheck = req.headers['no-check']
-  var pwd = req.headers['pwd']
-  var inputFile='../config/realserver-backup-list.csv';
+  var nocheck = req.headers['no-check'];
+  var pwd = req.headers['pwd'];
+  var inputFile='../lvs-config/realserver-backup-list.csv';
   console.log("processing realserver list file");
   var dict=[];
   var cntr = 0;
