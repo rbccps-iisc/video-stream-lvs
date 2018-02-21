@@ -12,5 +12,7 @@ sudo sed -i -e 's/DAEMON="none"/DAEMON="master"/' /etc/default/ipvsadm
 
 #install mon
 sudo apt-get install mon
+sudo /etc/init.d/mon stop
 sudo sed -i -e 's/DAEMONUSER=mon/DAEMONUSER=root/' /etc/init.d/mon
-
+sudo systemctl daemon-reload
+sudo /etc/init.d/mon start
