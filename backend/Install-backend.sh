@@ -5,3 +5,4 @@ sudo apt-get install npm
 sudo npm install 
 sudo npm install csv-parse
 sudo npm install request
+sudo apt-get install tmux
