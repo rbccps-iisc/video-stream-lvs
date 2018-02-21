@@ -2,7 +2,7 @@
   "name": "express-parameters",
   "main": "server.js",
   "dependencies": {
-    "csv-parse": "^2.0.0",
+    "csv-parse": "^2.0.4",
     "express": "~4.10.2",
     "request": "^2.83.0"
   }
